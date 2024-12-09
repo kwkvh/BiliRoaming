@@ -195,13 +195,12 @@ class PegasusHook(classLoader: ClassLoader) : BaseHook(classLoader) {
             val reason = obj.runCatchingOrNull {
                 getObjectField("rcmdReason")?.getObjectFieldAs<String?>("text").orEmpty()
             }.orEmpty()
-            if (kwdFilterReasonRegexMode && reason.isNotEmpty()) {
+            if (kwdFilterReasonRegexMode) {
                 if (kwdFilterReasonRegexes.any { reason.contains(it) })
                     return true
-            } else if (reason.isNotEmpty()) {
-                if (kwdFilterReasonList.any { reason.contains(it) })
+            } else if (kwdFilterReasonList.any { reason.contains(it) })
                     return true
-            }
+            
         }
 
         return false
